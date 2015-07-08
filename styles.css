@@ -1,11 +1,17 @@
+
 body{
 	background-color: #052611;
+
 }
 h1{
-	padding: 10px;
+	padding: 30px;
 	font-family: 'Lobster', cursive;
-	text-align:center;
 	color: #FFFFFF;
+}
+h4{
+	padding: 40px;
+	color: #FFFFFF;
+		font-family: 'Open Sans', sans-serif;
 }
 p{
 	padding: 15px;
@@ -32,24 +38,27 @@ font-family: 'Open Sans', sans-serif;
 width:70px;
 height:40px;
 float:left;
-top:-02px;
-left:319px;
+top:-1px;
+left:349px;
 margin-top:10px;
 background-color:#FFFFFF;
 }
-.customColorButtonClear{
+.customColorButtonClear{ /*eraser*/
 position:absolute;
 margin-left:1px;
-margin-top:24px;
-cursor:pointer;
-}
-.customColorBox{
 margin-top:20px;
-width:20px;
-height:20px;
-border:1px solid #eee;
+cursor:pointer;
+width: 30px;
+height: 30px;
+}
+.customColorBox{ /* 8 boxes*/
+margin-top:20px;
+margin-left: -5px;
+width:30px;
+height:30px;
+border:1px solid #000000;
 background:#d8d8d8;
-margin-right:7px;
+margin-right:5px;
 float:left;
 cursor:pointer;
 }
@@ -63,7 +72,7 @@ float:left;
 }
 
 #colorDiv{
-margin-left:223px;
+margin-left:283px;
 margin-top:105px;
 border:1px solid #FFFFFF;
 float:left;
