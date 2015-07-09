@@ -1,47 +1,59 @@
 
 <html>
 <head>
-<title>Palette Hex | Color Picker</title>
-<meta charset="UTF-8">
+	<title>Palette Hex | Color Picker</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<meta name="keywords" content="color picker, hex color, html color codes, colour picker, paletteHex, html, css, css color, color, color codes, colour codes, color chart, colour chart, color wheel, hex color, color code, color codes, couleur, farbe, , colores html">
+	<meta name="keywords" content="color picker, hex color, html color codes, colour picker, paletteHex, html, css, css color, color, color codes, colour codes, color chart, colour chart, color wheel, hex color, color code, color codes, couleur, farbe, , colores html">
 
-  <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'><!--google fonts-->
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'><!--google fonts-->
+	<link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'><!--google fonts-->
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'><!--google fonts-->
 
 
-<link rel="stylesheet" href="styles.css" type="text/css"><!--color box in here-->
+	<link rel="stylesheet" href="styles.css" type="text/css"><!--color box in here-->
 
-<script>defaultCol = "0C20F7";</script>
-<script type="text/javascript" src="mootools-1.2.4-core.js"></script>
-<script type="text/javascript" src="hexpicker.js"></script>
+	<script>defaultCol = "0C20F7";</script>
+	<script type="text/javascript" src="mootools-1.2.4-core.js"></script>
+	<script type="text/javascript" src="hexpicker.js"></script>
 </head>
 
 <body>
 
-<div id="header"><center>
-<h1>Palette Hex | Color Picker</h1>
-<h6>Palette Hex website provides free color tools for finding HTML colors for your website.</h6>
-</center>
-</div><!--end header-->
-  <p>Move the vertical slider to chose color or move mouse around and then click "ADD TO COLOR" square on the bottom right corner to get save your colors</p>
+	<div id="header">
+		<center>
+	<h1>Palette Hex | Color Picker</h1>
+		<h4>Palette Hex website provides free color tools for finding HTML colors for your website.</h4>
+	</div><!--end header-->
 
+	<center>
+		<div id="colorDiv" style="display:show;border:1px solid white;"></div>
+			<div id="colorDiv" ></div>
+				<div id="colorWidgetDiv" ></div>
+					</div></center>
 
+	<script language="JavaScript">
+	function changeBG(color){
+		document.bgColor = color;
+	}
 
-</center>
-<center><div id="colorDiv"></div>
-<div id="colorWidgetDiv" ></div>
-</div></center>
-<script language="JavaScript">
-
-function changeBG(color){
-document.bgColor = color;
-}
-
-</script>
-
-  <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an un</p>
+	</script>
 
 </center>
+<center>
+<div id="colorMap">
+
+<p>Mix two colors and see the result.</p>
+<hr>
+<center>
+	<img id="map" src="images/colormap.jpg">  
+		<img id="plus" src="images/plus.png">
+			<img id="map2" src="images/colormap.jpg">
+</center>
+
+</div><!--end colormap-->
+
+
+
 </body>
 </html>

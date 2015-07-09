@@ -170,7 +170,11 @@ saturation=(maxValue-minValue)/maxValue;
 hue=hue*60;
 valueBrightness=maxValue;
 if(hue<0)hue+=360;
-var returnArray={};returnArray.hue=hue;returnArray.saturation=saturation;returnArray.brightness=valueBrightness;return returnArray;},
+var returnArray={};
+returnArray.hue=hue;
+returnArray.saturation=saturation;
+returnArray.brightness=valueBrightness;
+return returnArray;},
 getContrastColorByRgb:function(rgbCode){
 	var hsv=this.getHsvByRgbCode(rgbCode);
 	hsv.hue+=180;if(hsv.hue>=360)
@@ -211,20 +215,39 @@ while(blue.length<2){blue="0"+""+blue;
 }
 rgbColor=red+""+green+""+blue;
 return rgbColor.toUpperCase();},
-getRgbColorsByRgbCode:function(rgbCode){var retArray={};retArray.red=this.baseConverter(rgbCode.substr(0,2),16,10);retArray.green=this.baseConverter(rgbCode.substr(2,2),16,10);retArray.blue=this.baseConverter(rgbCode.substr(4,2),16,10);return retArray;},getRgbColorsByHsv:function(hue,saturation,valueBrightness){Hi=Math.floor(hue/60);if(hue==360)
-hue=0;f=hue/60-Hi;if(saturation>1)saturation/=100;if(valueBrightness>1)valueBrightness/=100;p=(valueBrightness*(1-saturation));q=(valueBrightness*(1-(f*saturation)));t=(valueBrightness*(1-((1-f)*saturation)));switch(Hi){case 0:red=valueBrightness;green=t;blue=p;break;case 1:red=q;green=valueBrightness;blue=p;break;case 2:red=p;green=valueBrightness;blue=t;break;case 3:red=p;green=q;blue=valueBrightness;break;case 4:red=t;green=p;blue=valueBrightness;break;default:red=valueBrightness;green=p;blue=q;break;}
-if(saturation==0){red=valueBrightness;green=valueBrightness;blue=valueBrightness;}red*=255;green*=255;blue*=255;red=Math.round(red);green=Math.round(green);blue=Math.round(blue);return{red:red,green:green,blue:blue}},getRgbCodeByHsv:function(hue,saturation,valueBrightness){while(hue>=360)
+getRgbColorsByRgbCode:function(rgbCode){var retArray={};retArray.red=this.baseConverter(rgbCode.substr(0,2),16,10);retArray.green=this.baseConverter(rgbCode.substr(2,2),16,10);
+retArray.blue=this.baseConverter(rgbCode.substr(4,2),16,10);return retArray;},getRgbColorsByHsv:function(hue,saturation,valueBrightness){Hi=Math.floor(hue/60);
+	if(hue==360)
+hue=0;f=hue/60-Hi;if(saturation>1)saturation/=100;
+if(valueBrightness>1)valueBrightness/=100;p=(valueBrightness*(1-saturation));q=(valueBrightness*(1-(f*saturation)));t=(valueBrightness*(1-((1-f)*saturation)));
+switch(Hi){case 0:red=valueBrightness;green=t;blue=p;break;case 1:red=q;green=valueBrightness;blue=p;break;case 2:red=p;green=valueBrightness;blue=t;
+	break;case 3:red=p;green=q;blue=valueBrightness;break;case 4:red=t;green=p;blue=valueBrightness;break;default:red=valueBrightness;green=p;blue=q;break;}
+if(saturation==0){
+	red=valueBrightness;
+	green=valueBrightness;
+	blue=valueBrightness;
+}
+	red*=255;
+green*=255;
+blue*=255;
+red=Math.round(red);green=Math.round(green);
+blue=Math.round(blue);
+return{
+	red:red,green:green,blue:blue
+}},
+
+getRgbCodeByHsv:function(hue,saturation,valueBrightness){while(hue>=360)
 hue-=360;
 var colors=this.getRgbColorsByHsv(hue,saturation,valueBrightness);
 return this.getRgbCodeByRgbColors(colors.red,colors.green,colors.blue);
 }
 }
 );
-//invisible box for Adding colors to 10 Buttons
+//invisible box for Adding colors to 8 Buttons & ADD TO\nLIST
 paletteHex_com.colorWidget=new Class({Extends:Events,displayRgb:true,displayHsv:true,displayRgbCode:true,updateFormDuringMoveOnPalette:true,posdivElPalette:{},
 	circleOffsetBecauseOfWinWidget:0,circleOffsetSize:7,hueSliderPosition:'vertical',layoutCSS:'color-widget.css',currentHue:0,
-	currentBrightness:100,currentSaturation:100,paletteSize:256,currentRgbCode:'FF0000',imagePath:'',maxCustomColors:8,
-	customColorIndex:0,customColors:[],customColorsButtonText:'ADD TO\nLIST',customColorsClearButtonText:'Clear',customColorsBgColorOfEmptyBoxes:'#524B50',
+	currentBrightness:100,currentSaturation:100,paletteSize:256,currentRgbCode:'FFFFFF',imagePath:'',maxCustomColors:8,
+	customColorIndex:0,customColors:[],customColorsButtonText:'ADD TO\nLIST',customColorsClearButtonText:'Clear',customColorsBgColorOfEmptyBoxes:'#FFFFFF',
 	customColorsCookieName:'colorwidget_custom_color_cookie_new',
 	initialize:function(propertyArray){
 		this.colorHelper=new paletteHex_com.colorUtil();if(!standardObjectsCreated)
@@ -258,7 +281,9 @@ __setCustomColorCookie:function(){
 				return[];
 			}},
 			__getClearColors:function(){return[];},
-			getColor:function(){return{hue:this.currentHue,brightness:this.currentBrightness,saturation:this.currentSaturation,rgb:''+this.currentRgbCode}},__customColorBoxClick:function(e){if(e.target.getProperty('rgb')){var rgb=e.target.getProperty('rgb');this.fireEvent('selectcustomcolor',e.target.getProperty('rgb'));this.setRgbColor(rgb);}
+			getColor:function(){return{hue:this.currentHue,brightness:this.currentBrightness,saturation:this.currentSaturation,rgb:''+this.currentRgbCode}},
+			__customColorBoxClick:function(e){if(e.target.getProperty('rgb')){var rgb=e.target.getProperty('rgb');
+			this.fireEvent('selectcustomcolor',e.target.getProperty('rgb'));this.setRgbColor(rgb);}
 this.__removeHighlightFromCustomColorBoxes();$(e.target).addClass('activeCustomColorBox');this.customColorIndex=e.target.getProperty('index');},
 
 __createCustomColorBoxes:function(){
@@ -292,14 +317,17 @@ button.type='button';
 button.set('value',this.customColorsButtonText);
 button.addClass('customColorButton');
 button.addEvent('click',this.__addCustomColor.bind(this));
-this.customColorDiv.adopt(button);this.__createCustomColorBoxes();},
+this.customColorDiv.adopt(button);
+this.__createCustomColorBoxes();},
 
 __changeViewAfterColorChange:function(){
 	this.__setCurrentRgbCode();
-	this.__setPaletteBgColor();this.__setBgColorPreviewDiv();
+	this.__setPaletteBgColor();
+	this.__setBgColorPreviewDiv();
 	this.__setSliderPos();
 	this.__updateRgbInForm();
-	this.__updateHsvInForm();this.__setSmallCirclePosition();},
+	this.__updateHsvInForm();
+	this.__setSmallCirclePosition();},
 	__updateHsvInForm:function(){
 		if(!this.displayHsv){
 		return;}
@@ -313,19 +341,20 @@ __updateRgbInForm:function(){
 if(this.displayRgbCode){
 	this.fieldRgbCode.value=this.currentRgbCode;}this.fireEvent('changergb',this.getColor());},
 	__setSliderPos:function(){
-		var topPos=Math.round(this.paletteSize-((this.currentHue/360)*this.paletteSize))-3;
+		var topPos=Math.round(this.paletteSize-((this.currentHue/260)*this.paletteSize))-3;
 		this.sliderDiv.style.top=topPos;this.sliderDivHor.style.left=(this.currentHue-4)+'px';},
 __setBgColorPreviewDiv:
 function(){this.divElPreviewDiv.style.backgroundColor='#'+this.currentRgbCode;
 this.fieldRgbCode.style.color='#'+this.currentRgbCode;},
 __setPaletteBgColor:function(){try{this.divElPalette.style.backgroundColor='#'+this.colorHelper.getRgbCodeByHsv(this.currentHue,1,1);}
-catch(e){}},__createFormDiv:function(){
+catch(e){}},
+__createFormDiv:function(){
 	var ind=this.objectIndex;
 	this.divElForm=new Element('DIV');
 	this.divElForm.addClass('paletteHex_com_colorSliderFormDiv');
 	this.divElement.adopt(this.divElForm);
 	this.divElPreviewDiv=new Element('DIV');
-	this.divElPreviewDiv.addClass('paletteHex_com_colorSlider_colorPreview');
+	this.divElPreviewDiv.addClass('paletteHex_com_colorSlider_colorPreview');  /*Preview mini side box*/
 	this.divElPreviewDiv.style.position='absolute';
 	this.divElPreviewDiv.style.left='264px';
 	this.divElPreviewDiv.style.top='10px';
@@ -341,11 +370,12 @@ catch(e){}},__createFormDiv:function(){
 	if(this.displayHsv){
 		var row=table.insertRow(-1);
 		var cell=row.insertCell(-1);
+
 		cell.innerHTML='Hue:';
 		cell.style.position='absolute';
-		cell.style.left='322px';
+		cell.style.left='332px';
 		cell.style.top='69px';
-
+		cell.style.color='#FFFFFF'
 		var cell=row.insertCell(-1);
 		this.fieldHue=new Element('INPUT');
 		this.fieldHue.type='text';
@@ -361,8 +391,9 @@ catch(e){}},__createFormDiv:function(){
 
 		cell.innerHTML='Sat:';
 		cell.style.position='absolute';
-		cell.style.left='322px';
+		cell.style.left='332px';
 		cell.style.top='95px';
+		cell.style.color='#FFFFFF'
 		var cell=row.insertCell(-1);
 		this.fieldSaturation=new Element('INPUT');
 		this.fieldSaturation.type='text';
@@ -378,12 +409,14 @@ catch(e){}},__createFormDiv:function(){
 
 		cell.innerHTML='Bri:';
 		cell.style.position='absolute';
-		cell.style.left='322px';
+		cell.style.left='332px';
 		cell.style.top='121px';
+		cell.style.color='#FFFFFF'
 		var cell=row.insertCell(-1);
 		this.fieldBrightness=new Element('INPUT');
 		this.fieldBrightness.type='text';
-		this.fieldBrightness.addEvent('change',this.__receiveBriFromForm.bind(this));
+		this.fieldBrightness.addEvent('change',
+		this.__receiveBriFromForm.bind(this));
 		this.fieldBrightness.style.position='absolute';
 		this.fieldBrightness.style.left='352px';
 		this.fieldBrightness.style.top='121px';
@@ -396,13 +429,16 @@ if(this.displayRgb){var row=table.insertRow(-1);
 	cell.innerHTML='R:';
 	cell.style.position='absolute';
 	cell.style.color='#FA0000'
-	cell.style.left='322px';
-	cell.style.top='147px';var cell=row.insertCell(-1);
+	cell.style.left='332px';
+	cell.style.top='167px';
+	var cell=row.insertCell(-1);
 	this.fieldRed=new Element('INPUT');
 	this.fieldRed.type='text';
-	this.fieldRed.addEvent('change',this.__setRedColorFromForm.bind(this));
-	this.fieldRed.style.position='absolute';this.fieldRed.style.left='352px';
-	this.fieldRed.style.top='147px';
+	this.fieldRed.addEvent('change',
+	this.__setRedColorFromForm.bind(this));
+	this.fieldRed.style.position='absolute';
+	this.fieldRed.style.left='352px';
+	this.fieldRed.style.top='167px';
 	paletteHex_com.commonObj.__addEventEl(this.fieldRed);
 	this.fieldRed.maxLength=3;
 	cell.appendChild(this.fieldRed);
@@ -411,15 +447,15 @@ if(this.displayRgb){var row=table.insertRow(-1);
 	cell.innerHTML='G:';
 	cell.style.position='absolute';
 	cell.style.color='#179C13'
-	cell.style.left='322px';
-	cell.style.top='173px';
+	cell.style.left='332px';
+	cell.style.top='193px';
 	var cell=row.insertCell(-1);
 	this.fieldGreen=new Element('INPUT');
 	this.fieldGreen.type='text';
 	this.fieldGreen.addEvent('change',this.__setGreenColorFromForm.bind(this));
 	this.fieldGreen.style.position='absolute';
 	this.fieldGreen.style.left='352px';
-	this.fieldGreen.style.top='173px';
+	this.fieldGreen.style.top='193px';
 	paletteHex_com.commonObj.__addEventEl(this.fieldGreen);
 	this.fieldGreen.maxLength=3;
 	cell.appendChild(this.fieldGreen);
@@ -429,15 +465,15 @@ if(this.displayRgb){var row=table.insertRow(-1);
 	cell.innerHTML='B:';
 	cell.style.position='absolute';
 	cell.style.color='#033DFF'
-	cell.style.left='323px';
-	cell.style.top='199px';
+	cell.style.left='332px';
+	cell.style.top='219px';
 	var cell=row.insertCell(-1);
 	this.fieldBlue=new Element('INPUT');
 	this.fieldBlue.type='text';
 	this.fieldBlue.addEvent('change',this.__setBlueColorFromForm.bind(this));
 	this.fieldBlue.style.position='absolute';
 	this.fieldBlue.style.left='352px';
-	this.fieldBlue.style.top='199px';
+	this.fieldBlue.style.top='219px';
 	paletteHex_com.commonObj.__addEventEl(this.fieldBlue);
 	this.fieldBlue.maxLength=3;
 	cell.appendChild(this.fieldBlue);
@@ -446,7 +482,7 @@ if(this.displayRgbCode){
 
 var row=table.insertRow(-1);
 var cell=row.insertCell(-1);
-cell.innerHTML='HEX CODE  #';
+cell.innerHTML='ENTER HEX CODE HERE';
 cell.style.color='#FFFFFF'
 cell.style.position='absolute';
 cell.style.top='-30px';
@@ -460,7 +496,7 @@ this.fieldRgbCode.type='text';
 this.fieldRgbCode.maxLength=6;
 this.fieldRgbCode.style.position='absolute';
 this.fieldRgbCode.style.top='-29px';
-this.fieldRgbCode.style.left='105px';
+this.fieldRgbCode.style.left='170px';
 this.fieldRgbCode.addClass('ColcolorSlider_rgbCode');
 this.fieldRgbCode.addEvent('change',this.__receiveRgbCodeFromForm.bind(this));
 paletteHex_com.commonObj.__addEventEl(this.fieldRgbCode);
@@ -472,6 +508,7 @@ cell.appendChild(this.fieldRgbCode);
 	this.divElement.addClass('paletteHex_com_colorSlider');
 	if(this.parentRef)
 $(this.parentRef).adopt(this.divElement);},
+
 __correctPng:function(id){
 	try{
 		var img=$(id);
@@ -525,7 +562,8 @@ if(this.hueSliderPosition=='horizontal')
 mainDiv.style.display='none';},
 __createHueBarHorizontal:function(){
 	var ind=this.objectIndex;this.sliderDivHorMain=new Element('DIV');this.sliderDivHorMain.addClass('paletteHex_com_colorSlider_hueHorizontal');
-	this.divElement.appendChild(this.sliderDivHorMain);this.sliderDivHor=new Element('DIV');
+	this.divElement.appendChild(this.sliderDivHorMain);
+	this.sliderDivHor=new Element('DIV');
 this.sliderDivHor.addClass('paletteHex_com_colorSlider_sliderHandleHorizontal');
 this.sliderDivHorMain.appendChild(this.sliderDivHor);this.sliderDivHor.innerHTML='<div><span></span></div>';
 setTimeout('paletteHex_com.variableStorage.arrayDSObjects['+ind+'].sliderDiv.style.marginTop=(2 -Math.floor(paletteHex_com.variableStorage.arrayDSObjects['+ind+'].sliderDiv.offsetHeight/2))+"px"',100);
@@ -547,31 +585,137 @@ this.__updateHsvInForm();},
 
 __setHueFromSlider:function(e){if(document.all)
 e=event;var hue=360-Math.round((this.sliderDiv.offsetTop+4)*(360/this.paletteSize))
-if(hue>359||hue<0)hue=0;this.currentHue=hue;this.__setPaletteBgColor();this.__setBgColorPreviewDiv();this.__updateHsvInForm();this.__updateRgbInForm();},
+if(hue>359||hue<0)hue=0;
+this.currentHue=hue;
+this.__setPaletteBgColor();
+this.__setBgColorPreviewDiv()
+this.__updateHsvInForm();
+this.__updateRgbInForm();},
 
 __addEvents:function(){var ind=this.objectIndex;paletteHex_com.commonObj.addEvent(this.sliderDivHorMain,'mousedown',function(e){
 	return paletteHex_com.variableStorage.arrayDSObjects[ind].__initHorHueMove(e);});paletteHex_com.commonObj.addEvent(this.sliderDivMain,'mousedown',function(e){
 		return paletteHex_com.variableStorage.arrayDSObjects[ind].__initHueMove(e);});paletteHex_com.commonObj.addEvent(this.divElPalette,'mousedown',function(e){
-			return paletteHex_com.variableStorage.arrayDSObjects[ind].__initPaletteMove(e);});paletteHex_com.commonObj.addEvent(document.documentElement,'mousemove',function(e){paletteHex_com.variableStorage.arrayDSObjects[ind].__moveOnPalette(e);});paletteHex_com.commonObj.addEvent(document.documentElement,'mousemove',function(e){paletteHex_com.variableStorage.arrayDSObjects[ind].__moveOnHorizHueBar(e);});paletteHex_com.commonObj.addEvent(document.documentElement,'mousemove',function(e){paletteHex_com.variableStorage.arrayDSObjects[ind].__moveOnHueBar(e);});paletteHex_com.commonObj.addEvent(document.documentElement,'mouseup',function(e){paletteHex_com.variableStorage.arrayDSObjects[ind].__endDrag(e);});paletteHex_com.commonObj.addEvent(this.divElHueBar,'mousedown',function(e){paletteHex_com.variableStorage.arrayDSObjects[ind].__moveOnHueBar(e);});if(!document.documentElement.onselectstart){document.documentElement.onselectstart=function(){return paletteHex_com.commonObj.__isTextSelOk();};paletteHex_com.commonObj.__addEventEl(document.documentElement);}},__moveOnHueBar:function(e){if(this.hueStatus!=1)
+			return paletteHex_com.variableStorage.arrayDSObjects[ind].__initPaletteMove(e);});paletteHex_com.commonObj.addEvent(document.documentElement,'mousemove',function(e){paletteHex_com.variableStorage.arrayDSObjects[ind].__moveOnPalette(e);});paletteHex_com.commonObj.addEvent(document.documentElement,'mousemove',function(e){paletteHex_com.variableStorage.arrayDSObjects[ind].__moveOnHorizHueBar(e);});paletteHex_com.commonObj.addEvent(document.documentElement,'mousemove',function(e){paletteHex_com.variableStorage.arrayDSObjects[ind].__moveOnHueBar(e);});paletteHex_com.commonObj.addEvent(document.documentElement,'mouseup',function(e){paletteHex_com.variableStorage.arrayDSObjects[ind].__endDrag(e);});paletteHex_com.commonObj.addEvent(this.divElHueBar,'mousedown',function(e){paletteHex_com.variableStorage.arrayDSObjects[ind].__moveOnHueBar(e);});if(!document.documentElement.onselectstart){document.documentElement
+			.onselectstart=function(){return paletteHex_com.commonObj.__isTextSelOk();};paletteHex_com.commonObj.__addEventEl(document.documentElement);}},__moveOnHueBar:function(e){if(this.hueStatus!=1)
 return;if(document.all)e=event;var topPos=this.poxYHue;var diff=e.clientY+document.documentElement.scrollTop-topPos;if(diff>this.paletteSize)diff=this.paletteSize;
-if(diff<0)diff=0;this.sliderDiv.style.top=diff+'px';var hue=Math.round(((this.paletteSize-diff)*(360/this.paletteSize)));if(hue==360)
-hue=0;this.currentHue=hue;this.__setCurrentRgbCode();this.__setPaletteBgColor();this.__setBgColorPreviewDiv();this.__updateHsvInForm();this.__updateRgbInForm();},__moveOnHorizHueBar:function(e){if(this.hueHorStatus!=1)
+if(diff<0)diff=0;
+this.sliderDiv.style.top=diff+'px';var hue=Math.round(((this.paletteSize-diff)*(360/this.paletteSize)));if(hue==360)
+hue=0;this.currentHue=hue;
+this.__setCurrentRgbCode();
+this.__setPaletteBgColor();
+this.__setBgColorPreviewDiv();
+this.__updateHsvInForm();
+this.__updateRgbInForm();},
+
+__moveOnHorizHueBar:function(e){if(this.hueHorStatus!=1)
 return;if(document.all)e=event;var leftPos=this.posXHorHue;var diff=e.clientX-leftPos-this.circleOffsetBecauseOfWinWidget;if(diff<0)
-diff=0;if(diff>362)diff=362;this.sliderDivHor.style.left=(diff-4)+'px';var hue=diff;if(hue>=360)
-hue=0;this.currentHue=hue;this.__setCurrentRgbCode();this.__setPaletteBgColor();this.__setBgColorPreviewDiv();this.__updateHsvInForm();this.__updateRgbInForm();},__setHueFromRgbColorsInForm:function(){var color=this.colorHelper.getRgbCodeByRgbColors(this.fieldRed.value,this.fieldGreen.value,this.fieldBlue.value);var hsv=this.colorHelper.getHsvByRgbCode(color);this.currentHue=hsv.hue;this.currentSaturation=hsv.saturation*100;this.currentBrightness=hsv.brightness*100;this.__changeViewAfterColorChange();},__setRedColorFromForm:function(e){var src=e.target;var red=src.value;if(red.match(/^[0-9]+$/)){if(red/1>255)
-red=255;}else{red=0;}src.value=red;this.__setHueFromRgbColorsInForm();this.__changeViewAfterColorChange();},__setGreenColorFromForm:function(e){var src=e.target;var green=src.value;var green=src.value;if(green.match(/^[0-9]+$/)){if(green/1>255)
-green=255;}else{green=0;}src.value=green;this.__setHueFromRgbColorsInForm();this.__changeViewAfterColorChange();},__setBlueColorFromForm:function(e){var src=e.target;var blue=src.value;var blue=src.value;if(blue.match(/^[0-9]+$/)){if(blue/1>255)
-blue=255;}else{blue=0;}src.value=blue;this.__setHueFromRgbColorsInForm();},__receiveRgbCodeFromForm:function(e){var src=e.target;var rgbCode=src.value;if(!rgbCode.match(/^[0-9A-F][0-9A-F][0-9A-F][0-9A-F][0-9A-F][0-9A-F]$/i)){rgbCode='FF0000';}
-var hsv=this.colorHelper.getHsvByRgbCode(rgbCode);this.currentHue=hsv.hue;this.currentSaturation=hsv.saturation*100;this.currentBrightness=hsv.brightness*100;this.__changeViewAfterColorChange();},__receiveHueFromForm:function(e){var src=e.target;var hue=src.value;hue=hue+'';if(hue.match(/^[0-9]+$/)){if(hue/1>360)
-hue=360;}else{hue=0;}if(hue==360)hue=0;this.currentHue=hue;src.value=hue;this.__changeViewAfterColorChange();},__receiveBriFromForm:function(e){var src=e.target;var brightness=src.value;brightness=brightness+'';if(brightness.match(/^[0-9]+$/)){if(brightness/1>100)
-brightness=100;}else{brightness=0;}this.currentBrightness=brightness;src.value=brightness;this.__changeViewAfterColorChange();},__receiveSatFromForm:function(e){var src=e.target;var saturation=src.value;saturation=saturation+'';if(saturation.match(/^[0-9]+$/)){if(saturation/1>100)saturation=100;}else{saturation=0;}this.currentSaturation=saturation;src.value=saturation;this.__changeViewAfterColorChange();},__ffHackWinWidget:function(){if(this.divElement.parentNode.className&&this.divElement.parentNode.className.indexOf('windowContent')>=0&&!document.all){this.circleOffsetBecauseOfWinWidget=0;}},__initHorHueMove:function(e){this.hueHorStatus=1;this.__ffHackWinWidget();this.posXHorHue=paletteHex_com.commonObj.getLeftPos(this.divElHueBarHorizontal);paletteHex_com.commonObj.__setTextSelOk(false);this.__moveOnHorizHueBar(e);return false;},__initHueMove:function(e){this.hueStatus=1;this.poxYHue=paletteHex_com.commonObj.getTopPos(this.divElHueBar);paletteHex_com.commonObj.__setTextSelOk(false);this.__moveOnHueBar(e);return false;},__initPaletteMove:function(e){if(document.all)
-e=event;this.__ffHackWinWidget();this.posdivElPalette.x=paletteHex_com.commonObj.getLeftPos(this.divElPalette)+this.circleOffsetBecauseOfWinWidget;this.posdivElPalette.y=paletteHex_com.commonObj.getTopPos(this.divElPalette)+this.circleOffsetBecauseOfWinWidget;this.dragStatus=1;this.paletteMaxX=(this.divElPalette.clientWidth-this.circleOffsetSize);this.paletteMaxY=(this.divElPalette.clientHeight-this.circleOffsetSize);this.__moveOnPalette(e);paletteHex_com.commonObj.__setTextSelOk(false);return false;},__setCurrentRgbCode:function(){this.currentRgbCode=this.colorHelper.getRgbCodeByHsv(this.currentHue,this.currentSaturation/100,this.currentBrightness/100);},__endDrag:function(){if(this.dragStatus==1){this.__updateHsvInForm();this.__updateRgbInForm();}
+diff=0;if(diff>362)diff=362;
+this.sliderDivHor.style.left=(diff-4)+'px';
+var hue=diff;if(hue>=360)
+hue=0;this.currentHue=hue;
+this.__setCurrentRgbCode();
+this.__setPaletteBgColor();
+this.__setBgColorPreviewDiv();
+this.__updateHsvInForm();
+this.__updateRgbInForm();},
+
+__setHueFromRgbColorsInForm:function(){
+	var color=this.colorHelper.getRgbCodeByRgbColors(this.fieldRed.value,this.fieldGreen.value,this.fieldBlue.value);
+	var hsv=this.colorHelper.getHsvByRgbCode(color);
+	this.currentHue=hsv.hue;
+	this.currentSaturation=hsv.saturation*100;
+	this.currentBrightness=hsv.brightness*100;
+	this.__changeViewAfterColorChange();},
+
+	__setRedColorFromForm:function(e){
+		var src=e.target;
+		var red=src.value;
+		if(red.match(/^[0-9]+$/)){if(red/1>255)
+red=255;
+}else{
+	red=0;
+}
+	src.value=red;
+	this.__setHueFromRgbColorsInForm();
+this.__changeViewAfterColorChange();},
+__setGreenColorFromForm:function(e){
+	var src=e.target;
+	var green=src.value;
+	var green=src.value;
+	if(green.match(/^[0-9]+$/)){
+		if(green/1>255)
+green=255;
+}else{green=0;
+}src.value=green;
+this.__setHueFromRgbColorsInForm();
+this.__changeViewAfterColorChange();},
+
+__setBlueColorFromForm:function(e){
+	var src=e.target;
+	var blue=src.value;
+	var blue=src.value;
+	if(blue.match(/^[0-9]+$/)){if(blue/1>255)
+blue=255;
+}else{
+	blue=0;
+}
+	src.value=blue;
+	this.__setHueFromRgbColorsInForm();},
+	
+	__receiveRgbCodeFromForm:function(e){
+		var src=e.target;
+		var rgbCode=src.value;
+		if(!rgbCode.match(/^[0-9A-F][0-9A-F][0-9A-F][0-9A-F][0-9A-F][0-9A-F]$/i)){rgbCode='FF0000';}
+var hsv=this.colorHelper.getHsvByRgbCode(rgbCode);
+this.currentHue=hsv.hue;
+this.currentSaturation=hsv.saturation*100;
+this.currentBrightness=hsv.brightness*100;
+this.__changeViewAfterColorChange();},
+
+__receiveHueFromForm:function(e){
+	var src=e.target;
+	var hue=src.value;
+	hue=hue+'';
+	if(hue.match(/^[0-9]+$/)){if(hue/1>360)
+hue=360;
+}else{
+	hue=0;
+}
+if(hue==360)hue=0;
+this.currentHue=hue;
+src.value=hue;
+this.__changeViewAfterColorChange();
+},
+__receiveBriFromForm:function(e){var src=e.target;var brightness=src.value;brightness=brightness+'';if(brightness.match(/^[0-9]+$/)){if(brightness/1>100)
+brightness=100;}else{brightness=0;}this.currentBrightness=brightness;src.value=brightness;this.__changeViewAfterColorChange();},__receiveSatFromForm:function(e){var src=e.target;var saturation=src.value;saturation=saturation+'';if(saturation.match(/^[0-9]+$/)){if(saturation/1>100)saturation=100;}else{saturation=0;}this.currentSaturation=saturation;src.value=saturation;this.__changeViewAfterColorChange();},
+__ffHackWinWidget:function(){if(this.divElement.parentNode.className&&this.divElement.parentNode.className.indexOf('windowContent')>=0&&!document.all){this.circleOffsetBecauseOfWinWidget=0;}},__initHorHueMove:function(e){this.hueHorStatus=1;this.__ffHackWinWidget();this.posXHorHue=paletteHex_com.commonObj.getLeftPos(this.divElHueBarHorizontal);paletteHex_com.commonObj.__setTextSelOk(false);
+	this.__moveOnHorizHueBar(e);return false;},__initHueMove:function(e){this.hueStatus=1;
+	this.poxYHue=paletteHex_com.commonObj.getTopPos(this.divElHueBar);paletteHex_com.commonObj.__setTextSelOk(false);
+	this.__moveOnHueBar(e);return false;},__initPaletteMove:function(e){if(document.all)
+e=event;this.__ffHackWinWidget();this.posdivElPalette.x=paletteHex_com.commonObj.getLeftPos(this.divElPalette)+this.circleOffsetBecauseOfWinWidget;this.posdivElPalette.y=paletteHex_com.commonObj.getTopPos(this.divElPalette)+this.circleOffsetBecauseOfWinWidget;this.dragStatus=1;this.paletteMaxX=(this.divElPalette.clientWidth-this.circleOffsetSize);this.paletteMaxY=(this.divElPalette.clientHeight-this.circleOffsetSize);
+this.__moveOnPalette(e);paletteHex_com.commonObj.__setTextSelOk(false);return false;},__setCurrentRgbCode:function(){this.currentRgbCode=this.colorHelper.getRgbCodeByHsv(this.currentHue,this.currentSaturation/100,this.currentBrightness/100);},
+__endDrag:function(){if(this.dragStatus==1){this.__updateHsvInForm();this.__updateRgbInForm();}
 this.dragStatus=0;this.hueHorStatus=0;this.hueStatus=0;paletteHex_com.commonObj.__setTextSelOk(true);},__moveOnPalette:function(e){if(this.dragStatus!=1)
-return;if(this.clickOnPaletteInProgress)return;this.clickOnPaletteInProgress=true;if(document.all)
-e=event;var leftEl=this.posdivElPalette.x;var topEl=this.posdivElPalette.y;var left=e.clientX+document.documentElement.scrollLeft-leftEl-this.circleOffsetSize;var top=e.clientY+document.documentElement.scrollTop-topEl-this.circleOffsetSize;if(left<this.circleOffsetSize*-1)
+return;if(this.clickOnPaletteInProgress)return;this.clickOnPaletteInProgress=true;
+if(document.all)e=event;
+var leftEl=this.posdivElPalette.x;
+var topEl=this.posdivElPalette.y;
+var left=e.clientX+document.documentElement.scrollLeft-leftEl-this.circleOffsetSize;
+var top=e.clientY+document.documentElement.scrollTop-topEl-this.circleOffsetSize;
+if(left<this.circleOffsetSize*-1)
 left=this.circleOffsetSize*-1;if(top<this.circleOffsetSize*-1)top=this.circleOffsetSize*-1;if(left>this.paletteMaxX)left=this.paletteMaxX;if(top>this.paletteMaxY)
-top=this.paletteMaxY;this.divElPaletteCircle.style.left=left+'px';this.divElPaletteCircle.style.top=top+'px';this.currentSaturation=Math.round(((left+this.circleOffsetSize)/this.paletteSize)*100);this.currentBrightness=100-Math.round(((top+this.circleOffsetSize)/this.paletteSize)*100);this.__setCurrentRgbCode();this.__setBgColorPreviewDiv();if(this.updateFormDuringMoveOnPalette){this.__updateHsvInForm();this.__updateRgbInForm();}
-this.clickOnPaletteInProgress=false;}});var colorUtil=new paletteHex_com.colorUtil();var currentFunc='';
+top=this.paletteMaxY;this.divElPaletteCircle.style.left=left+'px';
+this.divElPaletteCircle.style.top=top+'px';
+this.currentSaturation=Math.round(((left+this.circleOffsetSize)/this.paletteSize)*100);
+this.currentBrightness=100-Math.round(((top+this.circleOffsetSize)/this.paletteSize)*100);
+this.__setCurrentRgbCode();
+this.__setBgColorPreviewDiv();
+if(this.updateFormDuringMoveOnPalette){
+	this.__updateHsvInForm();
+	this.__updateRgbInForm();}
+this.clickOnPaletteInProgress=false;}});
+var colorUtil=new paletteHex_com.colorUtil();
+var currentFunc='';
 
 
 
@@ -590,11 +734,14 @@ function setColor(color){
 
 }
 
-var currentPreviewColor;var colorWidget;window.addEvent('domready',function(){colorWidget=new paletteHex_com.colorWidget({hueSliderPosition:'vertical',parentRef:$('colorWidgetDiv')});colorWidget.addEvent('changergb',setColor);colorWidget.addEvent('selectcustomcolor',setColor);colorWidget.init();
+var currentPreviewColor;
+var colorWidget;
+window.addEvent('domready',function(){colorWidget=new paletteHex_com.colorWidget({hueSliderPosition:'vertical',parentRef:$('colorWidgetDiv')});colorWidget.addEvent('changergb',setColor);colorWidget.addEvent('selectcustomcolor',setColor);colorWidget.init();
 
 
 function getQueryString(){
-	var result={},queryString=location.pathname,re=/([^&=]+)=([^&]*)/g,m;while (m = re.exec(queryString)){result[decodeURIComponent(m[1])]=decodeURIComponent(m[2]);
+	var result={},queryString=location.pathname,re=/([^&=]+)=([^&]*)/g,m;
+	while (m = re.exec(queryString)){result[decodeURIComponent(m[1])]=decodeURIComponent(m[2]);
 	}
 	return result;
 }
@@ -633,6 +780,17 @@ getTetradeColors()
 });
 
 
+function setColor(color){				/*ColorDiv*/
+	color=color.rgb?color.rgb:color;
+	var obj=document.getElementById('colorDiv');
+	obj.style.backgroundColor=color;
+	currentPreviewColor=color;
+	if(currentFunc)eval(currentFunc);
+	if(color.name)obj.innerHTML=color.name;
+else 
+obj.innerHTML='<center>#<a href=/'+color.toLowerCase()+' class=hex-color>'+color+'</a></center></td></tr></table><a href="/'+color.toLowerCase()+'" title="http://www.hexpicker.com/'+color.toLowerCase()+'">';
+
+}
 
 
 
